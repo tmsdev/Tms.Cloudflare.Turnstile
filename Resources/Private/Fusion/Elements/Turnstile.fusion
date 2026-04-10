@@ -1,9 +1,47 @@
-prototype(Tms.Cloudflare.Turnstile:Turnstile.Definition) < prototype(Neos.Form.Builder:FormElement.Definition) {
-    @if.enabled = ${Configuration.setting('Tms.Cloudflare.Turnstile.enabled')}
-    @if.inLiveWorkspace = ${!node.context.inBackend && node.context.workspaceName == 'live'}
+prototype(Tms.Cloudflare.Turnstile:Turnstile) < prototype(Neos.Form.FusionRenderer:FormElement) {
+    label {
+        @if.notEmpty = ${element.label != ''}
+    }
 
-    formElementType = 'Tms.Cloudflare.Turnstile:Turnstile'
-    properties = ${Configuration.setting('Tms.Cloudflare.Turnstile')}
-
-    validators.turnstile = Tms.Cloudflare.Turnstile:TurnstileValidator.Definition
+    fieldContainer {
+        field {
+            tagName = 'div'
+            content = Neos.Fusion:Join {
+                noscript = Neos.Fusion:Tag {
+                    tagName = 'noscript'
+                    content = ${I18n.translate('Tms.Cloudflare.Turnstile:Main:widget.noScript.message')}
+                }
+                turnstile = Neos.Fusion:Tag {
+                    tagName = 'div'
+                    attributtes {
+                        id = ${element.uniqueIdentifier}
+                        class = 'cf-turnstile'
+                        data-action=${element.uniqueIdentifier}
+                        data-sitekey=${element.properties.siteKey}
+                        data-theme=${element.properties.theme}
+                        data-language=${element.properties.language}
+                        data-tabindex=${element.properties.tabindex}
+                        data-size=${element.properties.size}
+                        data-response-field-name=${'--' + element.parentRenderable.parentRenderable.identifier + '[' + element.identifier']'}
+                    }
+                }
+            }
+        }
+        validationErrors.@process.wrap = Neos.Fusion:Tag {
+            tagName = 'div'
+            attributes.class = 'cf-turnstile-error'
+            content = Neos.Fusion:Join {
+                validationErrors = ${value}
+                turnstilereset = Neos.Fusion:Tag  {
+                    tagName = 'a'
+                    attributes {
+                        data-cf-turnstile-reset = ''
+                        href = 'javascript:;'
+                        onclick = 'javascript:cfTurnstileReset(this);'
+                    }
+                    content = ${I18n.translate('Tms.Cloudflare.Turnstile:Main:widget.reset.btn')}
+                }
+            }
+        }
+    }
 }

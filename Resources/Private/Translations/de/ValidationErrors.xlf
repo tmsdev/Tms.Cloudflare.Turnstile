@@ -10,11 +10,11 @@
             <!-- Override NotEmptyValidator translations for the Turnstile element -->
             <trans-unit id="1221560910" xml:space="preserve" approved="yes">
 				<source>The captcha challenge failed.</source>
-                <target state="final">Die Captcha-Abfrage ist fehlgeschlagen.</target>
+                <target state="final">Die Captcha-Abfrage ist fehlgeschlagen. </target>
             </trans-unit>
             <trans-unit id="1221560718" xml:space="preserve" approved="yes">
 				<source>The captcha challenge failed.</source>
-                <target state="final">Die Captcha-Abfrage ist fehlgeschlagen.</target>
+                <target state="final">Die Captcha-Abfrage ist fehlgeschlagen. </target>
             </trans-unit>
         </body>
     </file>

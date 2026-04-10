@@ -1,29 +1,6 @@
 prototype(Neos.Neos:Page) {
     body.javascripts {
-        cloudflareTurnstileApi = Neos.Fusion:Tag {
-            @if.enabled = ${Configuration.setting('Tms.Cloudflare.Turnstile.enabled')}
-            @if.inLiveWorkspace = ${!node.context.inBackend && node.context.workspaceName == 'live'}
-            tagName = 'script'
-            attributes {
-                src = ${!Configuration.setting('Tms.Cloudflare.Turnstile.lazyload') && 'https://challenges.cloudflare.com/turnstile/v0/api.js'}
-                data-src = ${Configuration.setting('Tms.Cloudflare.Turnstile.lazyload') && 'https://challenges.cloudflare.com/turnstile/v0/api.js'}
-                data-cf-turnstile-api = true
-                async = true
-                defer = true
-            }
-        }
-        cloudflareTurnstileLazyload = Neos.Fusion:Tag {
-            @if.enabled = ${Configuration.setting('Tms.Cloudflare.Turnstile.enabled')}
-            @if.lazyload = ${Configuration.setting('Tms.Cloudflare.Turnstile.lazyload') && Configuration.setting('Tms.Cloudflare.Turnstile.autoIncludeLazyloadScript')}
-            @if.inLiveWorkspace = ${!node.context.inBackend && node.context.workspaceName == 'live'}
-            tagName = 'script'
-            attributes {
-                src = Neos.Fusion:ResourceUri {
-                    path = 'resource://Tms.Cloudflare.Turnstile/Public/JavaScript/Turnstile.js'
-                }
-                async = true
-                defer = true
-            }
-        }
+        cloudflareTurnstileApi = Tms.Cloudflare.Turnstile:TurnstilApiScript
+        cloudflareTurnstileLazyload = Tms.Cloudflare.Turnstile:TurnstilLazyLoadScript
     }
 }

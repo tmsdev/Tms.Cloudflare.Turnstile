@@ -1,0 +1,9 @@
+prototype(Tms.Cloudflare.Turnstile:Turnstile.Definition) < prototype(Neos.Form.Builder:FormElement.Definition) {
+    @if.enabled = ${Configuration.setting('Tms.Cloudflare.Turnstile.enabled')}
+    @if.inLiveWorkspace = ${!node.context.inBackend && node.context.workspaceName == 'live'}
+
+    formElementType = 'Tms.Cloudflare.Turnstile:Turnstile'
+    properties = ${Configuration.setting('Tms.Cloudflare.Turnstile')}
+
+    validators.turnstile = Tms.Cloudflare.Turnstile:TurnstileValidator.Definition
+}

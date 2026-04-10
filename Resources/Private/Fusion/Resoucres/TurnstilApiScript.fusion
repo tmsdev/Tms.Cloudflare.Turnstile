@@ -1,0 +1,13 @@
+
+prototype(Tms.Cloudflare.Turnstile:TurnstilApiScript) < prototype(Neos.Fusion:Tag) {
+    @if.enabled = ${Configuration.setting('Tms.Cloudflare.Turnstile.enabled')}
+    @if.inLiveWorkspace = ${!node.context.inBackend && node.context.workspaceName == 'live'}
+    tagName = 'script'
+    attributes {
+        src = ${!Configuration.setting('Tms.Cloudflare.Turnstile.lazyload') && 'https://challenges.cloudflare.com/turnstile/v0/api.js'}
+        data-src = ${Configuration.setting('Tms.Cloudflare.Turnstile.lazyload') && 'https://challenges.cloudflare.com/turnstile/v0/api.js'}
+        data-cf-turnstile-api = true
+        async = true
+        defer = true
+    }
+}

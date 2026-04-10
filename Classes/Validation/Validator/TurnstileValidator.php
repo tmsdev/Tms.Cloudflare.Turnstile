@@ -42,6 +42,7 @@ class TurnstileValidator extends AbstractValidator
     {
         if (!is_string($value) || empty($value)) {
             $this->addError('The captcha challenge failed.', 1676890456);
+            $this->logger->error('No value was given for turnstile validator', LogEnvironment::fromMethodName(__METHOD__));
             return;
         }
 
@@ -60,12 +61,14 @@ class TurnstileValidator extends AbstractValidator
             $this->logger->debug(json_encode($responseContent), LogEnvironment::fromMethodName(__METHOD__));
 
             if (!$responseContent['success']) {
-                $this->logger->error(json_encode($responseContent), LogEnvironment::fromMethodName(__METHOD__));
+                $this->logger->warning('Turnstile validation did not succeed. Response: '. json_encode($responseContent), LogEnvironment::fromMethodName(__METHOD__));
                 $this->addError('We could not identify you as a human. Please try again.', 1676890456);
             }
         } catch (\Exception $e) {
-            $this->logger->error($e->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
+            $this->logger->error('Turnstile validation failed.' . $e->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
             $this->addError('We could not identify you as a human. Please try again.', 1676890456);
         }
+
+        $this->logger->info('Turnstile validation succeeded.', LogEnvironment::fromMethodName(__METHOD__));
     }
 }

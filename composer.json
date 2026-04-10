@@ -1,7 +1,7 @@
 {
     "name": "tms/cloudflare-turnstile",
     "type": "neos-plugin",
-    "description": "Cloudflare’s smart CAPTCHA alternative Turnstile for Neos.Form",
+    "description": "Cloudflare's smart CAPTCHA alternative Turnstile for Neos.Form",
     "require": {
         "neos/form": "^4.0 || ^5.0"
     },
@@ -9,6 +9,9 @@
         "psr-4": {
             "Tms\\Cloudflare\\Turnstile\\": "Classes"
         }
+    },
+    "suggest": {
+        "neos/form-fusionrenderer": "A Flow Form Framework preset for Fusion based Form rendering."
     },
     "extra": {
         "neos": {

@@ -1,0 +1,14 @@
+
+prototype(Tms.Cloudflare.Turnstile:TurnstilLazyLoadScript) < prototype(Neos.Fusion:Tag) {
+    @if.enabled = ${Configuration.setting('Tms.Cloudflare.Turnstile.enabled')}
+    @if.lazyload = ${Configuration.setting('Tms.Cloudflare.Turnstile.lazyload') && Configuration.setting('Tms.Cloudflare.Turnstile.autoIncludeLazyloadScript')}
+    @if.inLiveWorkspace = ${!node.context.inBackend && node.context.workspaceName == 'live'}
+    tagName = 'script'
+    attributes {
+        src = Neos.Fusion:ResourceUri {
+            path = 'resource://Tms.Cloudflare.Turnstile/Public/JavaScript/Turnstile.js'
+        }
+        async = true
+        defer = true
+    }
+}
